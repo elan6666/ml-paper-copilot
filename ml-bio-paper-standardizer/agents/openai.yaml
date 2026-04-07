@@ -1,0 +1,7 @@
+interface:
+  display_name: "ML Bio Paper Standardizer"
+  short_description: "Standardize and polish ML and computational biology manuscripts."
+  default_prompt: "Use $ml-bio-paper-standardizer to revise this manuscript into a claim-driven, journal-ready draft."
+
+policy:
+  allow_implicit_invocation: true
