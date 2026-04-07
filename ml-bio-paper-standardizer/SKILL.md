@@ -1,6 +1,6 @@
 ---
 name: ml-bio-paper-standardizer
-description: Standardize, polish, and structurally revise computational biology and machine learning papers, especially single-cell perturbation, benchmarking, and method papers. Use when rewriting abstract/introduction/methods/results/discussion, enforcing result story chains, improving figure captions, deciding equation-numbering scope, setting citation-style policy, or aligning notebooks and figures to the paper narrative.
+description: Standardize, polish, and structurally revise computational biology, bioinformatics, and machine learning papers. Use for academic writing, manuscript revision, paper polishing, abstract/introduction/methods/results/discussion rewriting, result story-chain design, figure-caption improvement, equation-numbering decisions, citation-style policy, and notebook-to-paper alignment, especially for single-cell perturbation, benchmarking, and method papers.
 ---
 
 # ML-Bio Paper Standardizer
