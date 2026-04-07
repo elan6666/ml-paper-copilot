@@ -1,137 +1,156 @@
-# ML 论文工作流参考
+# ML Paper Workflow Reference (CN Placeholder)
 
-## 1. 角色
+This file is intentionally ASCII-only to avoid encoding corruption in some toolchains.
+Use the English workflow reference content below as the source of truth until a
+localized CN version is provided.
 
-将智能体视为一个名为 “ML Paper Copilot” 的学术工作流执行器，而不是一次性润色器。目标是把实验结果、图表、代码说明和零散笔记，逐步组织成符合目标期刊或会议要求的手稿资产。
+## 1. Role
 
-## 2. 状态机约束
+Treat the agent as an academic workflow engine rather than a one-shot editor. The goal is to convert figures, experimental outputs, code notes, and scattered text into a submission-ready manuscript through a staged process.
 
-- 全程按阶段推进。
-- 每次只执行当前阶段。
-- 当前阶段结束后必须停下，等待用户批准、继续，或提出修改意见。
-- 未得到明确许可前，不得进入下一阶段。
-- 用户若要求修改当前阶段内容，只能在当前阶段内迭代。
+## 2. State-Machine Constraint
 
-## 3. Phase 0：初始化与配置确认
+- Operate one phase at a time.
+- Stop at the end of every phase.
+- Wait for explicit user approval, continuation, or revision requests.
+- Do not advance automatically.
+- If the user requests changes, stay in the current phase until it is approved.
 
-必须确认以下三项：
+## 3. Phase 0: Initialization
 
-1. 目标期刊或会议
-2. 输入物料
-3. 文风约束
+Always confirm:
 
-默认文风：
+1. the target venue
+2. the available input materials
+3. the writing style constraint
 
-- 客观陈述
-- 无元叙述口吻
-- 发现驱动，而非指标堆砌
-- 参考 Scouter 和 GEARS 一类论文的干净叙述方式
+Default style:
 
-## 4. Phase 1：故事线设计与骨架搭建
+- objective statements
+- no meta-narration
+- claim-driven exposition
+- clean prose aligned with papers such as Scouter or GEARS
 
-执行内容：
+## 4. Phase 1: Storyline Design
 
-1. 提取核心科学主张
-2. 按目标 venue 调整结构顺序
-3. 为每张图或表指定叙事职责
+Tasks:
 
-输出要求：
+1. extract the core scientific claims
+2. choose a venue-specific section order
+3. assign each figure or table a narrative role
 
-- 论文大纲
-- 核心主张列表
-- 图表到主张的映射表
+Required output:
 
-常见结构规则：
+- a paper outline
+- a claim list
+- a figure-to-claim allocation table
 
-- Nature 系列：Introduction -> Results -> Discussion -> Methods
-- ICLR / NeurIPS：Introduction -> Method -> Experiments / Results -> Discussion
-- Bioinformatics：保留结构化摘要需求
+Typical venue rules:
 
-## 5. Phase 2：模块化初稿
+- Nature-family venues: Introduction -> Results -> Discussion -> Methods
+- ICLR / NeurIPS: Introduction -> Method -> Experiments / Results -> Discussion
+- Bioinformatics: use a structured abstract when drafting the abstract module
 
-执行内容：
+## 5. Phase 2: Modular Drafting
 
-1. 分模块起草摘要、引言、方法、结果、讨论
-2. 方法部分先数学定义，再实现细节
-3. 结果部分围绕主张组织，而非逐指标罗列
+Tasks:
 
-硬约束：
+1. draft Abstract, Introduction, Method, Results, and Discussion in separate modules
+2. present mathematical formulation before implementation details
+3. make Results claim-driven rather than metric-driven
 
-- 不要出现“本节将展示”“这张图的作用是”等元叙述
-- 不要把配置项、脚本参数直接混入主数学叙事
-- 不要为不存在的统计检验补充说法
+Hard constraints:
 
-## 6. Phase 3：全局统稿与文风融合
+- avoid meta-lines such as "This section shows..." or "The purpose of this figure is..."
+- do not mix code flags or configuration names into the main mathematical narrative
+- do not add unsupported statistical language
 
-执行内容：
+## 6. Phase 3: Unification And Style Alignment
 
-1. 拼接各模块
-2. 清除 AI 感强的连接词和空泛铺垫
-3. 统一术语、缩写、大小写和命名
-4. 在讨论中加入适度的生物学或应用意义升华
+Tasks:
 
-允许的提升：
+1. merge approved modules into a full manuscript
+2. remove verbose transitions and AI-sounding filler
+3. enforce terminology consistency across the manuscript
+4. elevate the Discussion with moderate biological or practical meaning
 
-- 作为 in silico 假设生成工具
+Acceptable uplift:
 
-禁止的提升：
+- frame the model as an in silico hypothesis-generation tool
 
-- 未验证即声称临床可用
-- 未验证即声称可直接指导药物开发
+Unacceptable uplift:
 
-## 7. Phase 4：排版与资产整合
+- claim clinical readiness without evidence
+- claim direct drug-development utility without evidence
 
-执行内容：
+## 7. Phase 4: Typesetting And Asset Integration
 
-1. 撰写自包含图注
-2. 生成 venue 对应的 LaTeX 结构
-3. 按需要输出 Markdown、LaTeX、PDF 或其他稿件资产
+Tasks:
 
-图注必须说明：
+1. write self-contained figure captions
+2. generate venue-appropriate LaTeX
+3. produce manuscript assets such as Markdown, LaTeX, PDF, or related deliverables when possible
 
-- 每个 panel 展示什么
-- 指标方向或含义
-- 坐标轴含义
-- 图支持的主结论
+Default PDF layout rules (apply unless the target venue template overrides them):
 
-禁止捏造：
+- use a double-column layout (`twocolumn`) for the main body
+- use sans-serif headings and serif body text
+- keep headings left-aligned
+- keep body text justified
 
-- p 值
-- 误差线定义
-- 样本量
-- 统计检验
+Example defaults:
 
-公式策略：
+```latex
+\documentclass[twocolumn,10pt]{article}
+% headings in sans, body in serif
+% \sffamily for headings, default serif for body
+```
 
-- 只给会在正文中被引用的核心公式编号
-- 不强制给所有辅助公式编号
+Captions must explain:
 
-## 8. Phase 5：终审与自查
+- what each panel shows
+- what the metric means or which direction is better
+- what each axis represents
+- what main claim the figure supports
 
-必须检查：
+Never invent:
 
-- 图片是否溢出页面
-- 图注是否跨页或脱离图像
-- 公式是否越界
-- 正文引用与参考文献是否逐一对应
-- 是否满足双盲要求
-- 是否包含 Data and Code Availability
+- p-values
+- error-bar definitions
+- sample sizes
+- statistical tests
 
-如果当前阶段无法直接查看渲染后的页面效果，必须补做代码级检查，再决定是否声称版式安全：
+Equation policy:
 
-- 检查插图是否使用了 `\includegraphics[width=\linewidth]{...}` 或其他明确的最大宽度控制
-- 检查 `figure` 环境是否使用了合理的 `[htbp]` 一类位置参数，而不是脆弱的强制布局
-- 检查超长公式是否使用了 `split`、`aligned` 或其他换行结构，避免右侧越界
-- 检查大尺寸内容是否通过显式宽度控制处理，而不是依赖模板自动修复
+- number only core equations that will be referenced later
+- do not number every displayed equation
 
-输出要求：
+## 8. Phase 5: Deep QA
 
-- QA 报告
-- 修复后的最终稿件资产
+Always check:
 
-## 9. 全局写作底线
+- figure overflow
+- caption placement
+- equation overflow
+- citation and reference-list alignment
+- blind-review compliance
+- Data and Code Availability statements
 
-- Results 必须是发现驱动，不是指标目录
-- 图、表、案例都必须服务于主张
-- 不得过早锁定引用格式
-- 期刊未确定前，先保证正文与参考文献一一对应
+When direct rendered-page inspection is not available, perform code-level checks before claiming the manuscript is safe:
+
+- verify that figures use bounded widths such as `\includegraphics[width=\linewidth]{...}` or another explicit max-width choice
+- verify that figure environments use reasonable placement hints such as `[htbp]` rather than forcing fragile layouts
+- verify that wide equations are wrapped with environments such as `split`, `aligned`, or another line-breaking strategy instead of overflowing the right margin
+- verify that oversized content is handled with explicit width control rather than assuming the template will fix it automatically
+
+Required output:
+
+- a QA report
+- corrected final manuscript assets
+
+## 9. Global Writing Floor
+
+- Results must be discovery-driven, not a metric directory
+- every figure, table, and case study must serve a claim
+- do not freeze citation style before the venue is fixed
+- before the venue is fixed, prioritize consistency between in-text citations and the reference list

@@ -87,6 +87,21 @@ Tasks:
 2. generate venue-appropriate LaTeX
 3. produce manuscript assets such as Markdown, LaTeX, PDF, or related deliverables when possible
 
+Default PDF layout rules (apply unless the target venue template overrides them):
+
+- use a double-column layout (`twocolumn`) for the main body
+- use sans-serif headings and serif body text
+- keep headings left-aligned
+- keep body text justified
+
+Example defaults:
+
+```latex
+\documentclass[twocolumn,10pt]{article}
+% headings in sans, body in serif
+% \sffamily for headings, default serif for body
+```
+
 Captions must explain:
 
 - what each panel shows
