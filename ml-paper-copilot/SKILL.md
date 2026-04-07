@@ -1,6 +1,6 @@
 ---
 name: ml-paper-copilot
-description: Run a five-phase, approval-gated manuscript workflow for machine learning, computational biology, and bioinformatics papers. Use when Codex needs to turn figures, experiment results, Markdown fragments, code notes, or scattered ideas into a venue-adapted paper pipeline with storyline design, modular drafting, full-text unification, LaTeX/typesetting, and final QA. Triggers include paper workflow, staged drafting, manuscript pipeline, figure-to-paper conversion, and stepwise paper writing for venues such as Nature Biotechnology, Bioinformatics, ICLR, NeurIPS, or IEEE.
+description: Five-phase, approval-gated paper writing and manuscript drafting workflow for machine learning, computational biology, and bioinformatics papers. Use when Codex needs help with paper workflow, academic writing workflow, manuscript pipeline, journal paper writing, conference paper writing, figure-to-paper conversion, results-to-paper drafting, manuscript revision, paper polishing, paper organization, venue-specific paper structure, LaTeX paper drafting, caption writing, final manuscript QA, or stepwise paper writing for venues such as Nature Biotechnology, Bioinformatics, ICLR, NeurIPS, and IEEE.
 ---
 
 # ML Paper Copilot
@@ -33,10 +33,11 @@ If the user already provided some of these items, acknowledge them and ask only 
 
 Read project-specific instructions first when they exist.
 
-- If the repo contains a manuscript workflow file, load it before the default references.
-- Then read the default workflow reference that matches the working language:
+- If the repo contains a manuscript workflow file, explicitly read it with the file reading tool before the default references.
+- You MUST explicitly use the file reading tool to read the default workflow reference that matches the working language before starting Phase 0:
   - Chinese: `references/workflow_cn.md`
   - English: `references/workflow_en.md`
+- Do not infer workflow rules from memory when the reference file is available.
 
 ## Phase Execution
 

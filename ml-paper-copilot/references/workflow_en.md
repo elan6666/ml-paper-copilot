@@ -117,6 +117,13 @@ Always check:
 - blind-review compliance
 - Data and Code Availability statements
 
+When direct rendered-page inspection is not available, perform code-level checks before claiming the manuscript is safe:
+
+- verify that figures use bounded widths such as `\includegraphics[width=\linewidth]{...}` or another explicit max-width choice
+- verify that figure environments use reasonable placement hints such as `[htbp]` rather than forcing fragile layouts
+- verify that wide equations are wrapped with environments such as `split`, `aligned`, or another line-breaking strategy instead of overflowing the right margin
+- verify that oversized content is handled with explicit width control rather than assuming the template will fix it automatically
+
 Required output:
 
 - a QA report

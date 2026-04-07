@@ -2,3 +2,29 @@
 Thumbs.db
 __pycache__/
 *.pyc
+*.pyo
+
+# LaTeX temporary files
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.nav
+*.snm
+*.xdv
+*.bcf
+*.run.xml
+
+# IDE and environments
+.vscode/
+.idea/
+.venv/
+venv/
+.env

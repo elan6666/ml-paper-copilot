@@ -33,6 +33,36 @@ Hard constraint: the agent must stop after each phase and wait for explicit user
 - Produce self-contained captions and LaTeX after the paper logic is approved
 - Run a final pre-submission QA pass on the manuscript assets
 
+## Input Materials
+
+Phase 0 works better when the user provides structured source material instead of only broad requests.
+
+Recommended inputs:
+
+- figures or tables
+- a one-sentence conclusion for each figure
+- three to five bullet points describing the core innovation
+- result summaries or metric notes
+- Markdown fragments from an existing draft
+- venue target and any formatting constraints
+
+The workflow should guide the user to provide missing inputs when they are absent.
+
+## Search Keywords
+
+This skill is intended to match needs such as:
+
+- paper writing
+- manuscript drafting
+- academic writing workflow
+- journal paper workflow
+- conference paper workflow
+- bioinformatics paper writing
+- computational biology manuscript drafting
+- figure-to-paper conversion
+- results-to-paper workflow
+- staged paper revision
+
 ## Repository Structure
 
 ```text
@@ -62,6 +92,17 @@ After installation, invoke the skill by name in a paper-writing task.
 
 ```text
 Use $ml-paper-copilot to turn my figures, notes, and results into a five-phase paper workflow. Stop after each phase and wait for my approval before continuing.
+```
+
+## Interaction Example
+
+```text
+User: Use $ml-paper-copilot. I attached 3 figure images and a results.md draft.
+Agent: Phase 0. What is the target venue? Please also provide a one-sentence conclusion for each figure and 3 bullet points for the core contribution.
+User: Target venue is ICLR. Here are the figure conclusions and contribution bullets.
+Agent: Phase 1. Here is the storyline, outline, and figure-to-claim mapping. Do you approve, or should I revise it before Phase 2?
+User: Approved. Continue to Phase 2.
+Agent: Phase 2. Here are the module drafts for Abstract, Introduction, Method, Results, and Discussion. Please review before Phase 3.
 ```
 
 ## Design Principles
