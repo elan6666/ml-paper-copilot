@@ -1,71 +1,74 @@
-# ml-bio-paper-standardizer
+# ml-paper-copilot
 
 ## English
 
-A reusable Codex skill for standardizing machine learning and computational biology manuscripts, with a focus on single-cell perturbation prediction papers, benchmark-heavy method papers, and biology-facing ML manuscripts.
+A reusable Codex skill for turning figures, experiment results, Markdown fragments, and scattered notes into a staged manuscript workflow for machine learning, computational biology, and bioinformatics papers.
 
 ### Repository Structure
 
 ```text
-ml-bio-paper-standardizer/
+ml-paper-copilot/
 ├── README.md
 ├── LICENSE
 ├── .gitignore
-└── ml-bio-paper-standardizer/
+└── ml-paper-copilot/
     ├── SKILL.md
+    ├── agents/
+    │   └── openai.yaml
     └── references/
-        ├── paper_standards_cn.md
-        └── paper_standards_en.md
+        ├── workflow_cn.md
+        └── workflow_en.md
 ```
 
-### What This Skill Is For
+### What This Skill Does
 
-This skill is suitable for papers such as:
+This skill runs as a five-phase, approval-gated workflow:
 
-- single-cell perturbation prediction
-- computational biology and bioinformatics method papers
-- benchmark-heavy ML-for-biology manuscripts
-- reference-conditioned, generative, or representation-learning papers
+1. initialization and configuration confirmation
+2. storyline design and outline building
+3. modular drafting
+4. full-text unification and style alignment
+5. typesetting and final QA
 
-It is especially useful when you need to:
+The agent must stop after each phase and wait for explicit user approval before continuing.
 
-- rewrite abstract, introduction, methods, results, or discussion
-- convert metric-heavy results into a claim-driven story chain
-- align figures, notebooks, and manuscript structure
-- decide which equations should be numbered
-- strengthen figure captions without inventing unsupported statistics
+### Typical Uses
+
+- convert figures and results into a venue-adapted paper plan
+- build a paper step by step instead of requesting a one-shot rewrite
+- enforce venue-specific structure for Nature-family venues, Bioinformatics, ICLR, NeurIPS, or IEEE
+- generate LaTeX and captions only after the narrative is approved
+- perform a final manuscript QA pass before submission
 
 ### How To Use
 
-Place the `ml-bio-paper-standardizer` folder under your Codex skills directory, for example:
+Place the `ml-paper-copilot` folder under your Codex skills directory, for example:
 
 - Windows: `%USERPROFILE%\\.codex\\skills\\`
 - Cross-platform: `${CODEX_HOME}/skills/`
 
-Then invoke the skill by name in a task involving paper drafting or revision.
+Then invoke the skill by name when you want a paper-writing workflow rather than a paper-standard checklist.
 
 ## 中文
 
-这是一个可复用的 Codex skill，用于统一机器学习与计算生物学论文的写作标准，尤其适合单细胞扰动预测、benchmark-heavy 方法论文以及强调生物学解释的 ML 论文。
+这是一个可复用的 Codex skill，用于把实验结果图、表格、Markdown 草稿、代码说明和零散笔记，转换成一个可审批的论文工作流，适用于机器学习、计算生物学和生物信息学论文。
 
 ### 适用场景
 
-它尤其适合以下任务：
-
-- 重写摘要、引言、方法、结果或讨论
-- 将“指标堆砌式结果”改写为“主张驱动的故事链”
-- 对齐 notebook、图表与论文叙事
-- 决定哪些核心公式应该编号
-- 扩写图注，但不虚构误差线、样本量或统计检验
+- 先设计故事线和大纲，再逐步起草论文
+- 依据目标期刊或会议切换章节顺序与摘要格式
+- 将图表映射到核心科学主张，而不是直接堆指标
+- 在全文批准后再进入 LaTeX 排版与图注整合
+- 在最终导出前执行一次严格的排版与引用 QA
 
 ### 使用方式
 
-将 `ml-bio-paper-standardizer` 文件夹放到你的 Codex skills 目录，例如：
+将 `ml-paper-copilot` 文件夹放到你的 Codex skills 目录，例如：
 
-- Windows：`%USERPROFILE%\\.codex\\skills\\`
-- 跨平台：`${CODEX_HOME}/skills/`
+- Windows: `%USERPROFILE%\\.codex\\skills\\`
+- 跨平台: `${CODEX_HOME}/skills/`
 
-之后在论文改写任务中按名称调用即可。
+之后在论文写作任务中按名称调用该 skill。它会以 5 个阶段的状态机方式运行，并在每个阶段结束后停下等待你的批准。
 
 ## License
 

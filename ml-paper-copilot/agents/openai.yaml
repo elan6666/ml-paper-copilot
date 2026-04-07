@@ -1,0 +1,7 @@
+interface:
+  display_name: "ML Paper Copilot"
+  short_description: "Run a five-phase, approval-gated workflow for ML and bioinformatics papers."
+  default_prompt: "Use $ml-paper-copilot to turn my figures, notes, and results into a five-phase paper workflow. Stop after each phase and wait for my approval before continuing."
+
+policy:
+  allow_implicit_invocation: true
