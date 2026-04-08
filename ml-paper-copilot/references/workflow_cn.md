@@ -1,156 +1,46 @@
-# ML Paper Workflow Reference (CN Placeholder)
+# ML Paper Copilot - 两阶段工作流
 
-This file is intentionally ASCII-only to avoid encoding corruption in some toolchains.
-Use the English workflow reference content below as the source of truth until a
-localized CN version is provided.
+## 0. 总体规则
 
-## 1. Role
+这是两阶段(2-Phase)全自动流程。
+- Phase 0 仅此一次停顿
+- Phase 1 一口气跑到底
 
-Treat the agent as an academic workflow engine rather than a one-shot editor. The goal is to convert figures, experimental outputs, code notes, and scattered text into a submission-ready manuscript through a staged process.
+## Phase 0: 初始化与拦截
 
-## 2. State-Machine Constraint
+必须收集并确认：
+1. 目标期刊/会议或模板
+2. 图表/结果材料(可声明暂无)
+3. 结果摘要或 Markdown 碎片
+4. .bib 文件
+5. 文风偏好(默认客观、发现驱动、无元叙述)
+确认后进入 Phase 1，不再停。
 
-- Operate one phase at a time.
-- Stop at the end of every phase.
-- Wait for explicit user approval, continuation, or revision requests.
-- Do not advance automatically.
-- If the user requests changes, stay in the current phase until it is approved.
+## Phase 1: 端到端暗箱执行
 
-## 3. Phase 0: Initialization
+### Step A: 故事线设计
+- 仅基于输入提取核心主张
+- 生成 venue 对齐大纲和图表映射
 
-Always confirm:
+### Step B: 状态机接力起草
+- 建立内部 state(大纲、章节摘要、TODO)
+- 分段起草，每段压缩成 5-10 行摘要写入 state
+- 后续章节只依赖 state + 原始输入
 
-1. the target venue
-2. the available input materials
-3. the writing style constraint
+### Step C: 内部魔鬼自审(隐式)
+- 使用 Devil's Advocate + 方法学审查
+- 发现 CRITICAL/MAJOR 自动重写并复查
+- 不输出自审过程
 
-Default style:
+### Step D: 模板注入 + 自动文献织入
+- 选择 ml-paper-writing/templates 中的官方模板
+- 直接注入模板，不手写 LaTeX 结构
+- 引用仅来自 .bib
+- 仅在条目存在时插入 \cite{}
+- 缺失引用在 QA 中标注
 
-- objective statements
-- no meta-narration
-- claim-driven exposition
-- clean prose aligned with papers such as Scouter or GEARS
+## 最终输出
 
-## 4. Phase 1: Storyline Design
-
-Tasks:
-
-1. extract the core scientific claims
-2. choose a venue-specific section order
-3. assign each figure or table a narrative role
-
-Required output:
-
-- a paper outline
-- a claim list
-- a figure-to-claim allocation table
-
-Typical venue rules:
-
-- Nature-family venues: Introduction -> Results -> Discussion -> Methods
-- ICLR / NeurIPS: Introduction -> Method -> Experiments / Results -> Discussion
-- Bioinformatics: use a structured abstract when drafting the abstract module
-
-## 5. Phase 2: Modular Drafting
-
-Tasks:
-
-1. draft Abstract, Introduction, Method, Results, and Discussion in separate modules
-2. present mathematical formulation before implementation details
-3. make Results claim-driven rather than metric-driven
-
-Hard constraints:
-
-- avoid meta-lines such as "This section shows..." or "The purpose of this figure is..."
-- do not mix code flags or configuration names into the main mathematical narrative
-- do not add unsupported statistical language
-
-## 6. Phase 3: Unification And Style Alignment
-
-Tasks:
-
-1. merge approved modules into a full manuscript
-2. remove verbose transitions and AI-sounding filler
-3. enforce terminology consistency across the manuscript
-4. elevate the Discussion with moderate biological or practical meaning
-
-Acceptable uplift:
-
-- frame the model as an in silico hypothesis-generation tool
-
-Unacceptable uplift:
-
-- claim clinical readiness without evidence
-- claim direct drug-development utility without evidence
-
-## 7. Phase 4: Typesetting And Asset Integration
-
-Tasks:
-
-1. write self-contained figure captions
-2. generate venue-appropriate LaTeX
-3. produce manuscript assets such as Markdown, LaTeX, PDF, or related deliverables when possible
-
-Default PDF layout rules (apply unless the target venue template overrides them):
-
-- use a double-column layout (`twocolumn`) for the main body
-- use sans-serif headings and serif body text
-- keep headings left-aligned
-- keep body text justified
-
-Example defaults:
-
-```latex
-\documentclass[twocolumn,10pt]{article}
-% headings in sans, body in serif
-% \sffamily for headings, default serif for body
-```
-
-Captions must explain:
-
-- what each panel shows
-- what the metric means or which direction is better
-- what each axis represents
-- what main claim the figure supports
-
-Never invent:
-
-- p-values
-- error-bar definitions
-- sample sizes
-- statistical tests
-
-Equation policy:
-
-- number only core equations that will be referenced later
-- do not number every displayed equation
-
-## 8. Phase 5: Deep QA
-
-Always check:
-
-- figure overflow
-- caption placement
-- equation overflow
-- citation and reference-list alignment
-- blind-review compliance
-- Data and Code Availability statements
-
-When direct rendered-page inspection is not available, perform code-level checks before claiming the manuscript is safe:
-
-- verify that figures use bounded widths such as `\includegraphics[width=\linewidth]{...}` or another explicit max-width choice
-- verify that figure environments use reasonable placement hints such as `[htbp]` rather than forcing fragile layouts
-- verify that wide equations are wrapped with environments such as `split`, `aligned`, or another line-breaking strategy instead of overflowing the right margin
-- verify that oversized content is handled with explicit width control rather than assuming the template will fix it automatically
-
-Required output:
-
-- a QA report
-- corrected final manuscript assets
-
-## 9. Global Writing Floor
-
-- Results must be discovery-driven, not a metric directory
-- every figure, table, and case study must serve a claim
-- do not freeze citation style before the venue is fixed
-- before the venue is fixed, prioritize consistency between in-text citations and the reference list
+一次性输出：
+1. 可编译 LaTeX 源码
+2. 简短 QA 报告(风险点/缺失材料/未解决问题)

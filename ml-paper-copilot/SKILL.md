@@ -1,94 +1,86 @@
 ---
 name: ml-paper-copilot
-description: Five-phase, approval-gated paper writing and manuscript drafting workflow for machine learning, computational biology, and bioinformatics papers. Use when Codex needs help with paper workflow, academic writing workflow, manuscript pipeline, journal paper writing, conference paper writing, figure-to-paper conversion, results-to-paper drafting, manuscript revision, paper polishing, paper organization, venue-specific paper structure, LaTeX paper drafting, caption writing, final manuscript QA, or stepwise paper writing for venues such as Nature Biotechnology, Bioinformatics, ICLR, NeurIPS, and IEEE.
+description: Two-phase, approval-gated, fully automated academic manuscript workflow for ML, computational biology, and bioinformatics papers. Use when Codex must collect venue + figures + results + .bib once, then run a single end-to-end pipeline: storyline design, state-tracked drafting, internal devil's-advocate self-correction, template-based LaTeX typesetting, and final QA.
 ---
 
-# ML Paper Copilot
+# ML Paper Copilot (2-Phase Auto Workflow)
 
-Use this skill for Chinese, English, or bilingual papers when the user wants a staged workflow instead of a one-pass rewrite.
+Use this skill when the user wants a minimal, anti-fragile, two-phase pipeline that only pauses once for confirmation, then runs end-to-end without interruptions.
 
-## Core Operating Rule
+## Core Operating Rule (Strict 2-Phase State Machine)
 
-Treat the interaction as a strict state machine.
+- Phase 0 is the ONLY stop point.
+- Phase 1 runs to completion without user interaction.
+- Do not add extra approval gates beyond Phase 0.
 
-- Execute only the current phase.
-- Stop after each phase.
-- Ask for approval or revisions.
-- Do not enter the next phase until the user explicitly replies with approval, continuation, or an equivalent confirmation.
-- If the user requests edits to the current phase, stay in the same phase and revise only that phase's output.
+## Mandatory Knowledge Loading (Before Phase 0)
 
-## Initialization
+You MUST explicitly read the following local references before starting Phase 0:
 
-Start in Phase 0.
+1. Red-team self-correction:
+   - `C:\Users\16523\.agents\skills\academic-paper-reviewer\agents\devils_advocate_reviewer_agent.md`
+   - `C:\Users\16523\.agents\skills\academic-paper-reviewer\agents\methodology_reviewer_agent.md`
+   - `C:\Users\16523\.agents\skills\paper-self-review\SKILL.md`
+2. Template injection + citation automation:
+   - `C:\Users\16523\.codex\skills\ml-paper-writing\references\citation-workflow.md`
+   - `C:\Users\16523\.codex\skills\ml-paper-writing\templates\README.md`
+3. State-tracked drafting:
+   - `C:\Users\16523\.codex\skills\autoresearch\references\agent-continuity.md`
+   - `C:\Users\16523\.codex\skills\autoresearch\templates\research-state.yaml`
 
-Ask the user for:
+Also read the workflow reference for the working language:
+- Chinese: `references/workflow_cn.md`
+- English: `references/workflow_en.md`
 
-1. target venue
-2. input materials such as figures, Markdown fragments, tables, or result summaries
-3. confirmation that the default tone is objective, claim-driven, and free of meta-narration
+Do not infer rules from memory when these files are available.
 
-If the user already provided some of these items, acknowledge them and ask only for the missing pieces.
+## Phase 0 (Initialization And Intercept)
 
-## Reference Loading
+Collect and confirm all inputs. Stop and wait once.
 
-Read project-specific instructions first when they exist.
+Required inputs:
+- target venue or template (ICLR/NeurIPS/ICML/ACL/AAAI/etc.)
+- figures and tables (or explicit statement that none exist yet)
+- results summary or Markdown fragments
+- bibliography file: `.bib`
+- style preference (objective, claim-driven, no meta-narration by default)
 
-- If the repo contains a manuscript workflow file, explicitly read it with the file reading tool before the default references.
-- You MUST explicitly use the file reading tool to read the default workflow reference that matches the working language before starting Phase 0:
-  - Chinese: `references/workflow_cn.md`
-  - English: `references/workflow_en.md`
-- Do not infer workflow rules from memory when the reference file is available.
+If any required input is missing, ask for it. After confirmation, proceed to Phase 1 and do not pause again.
 
-## Phase Execution
+## Phase 1 (End-to-End Black-Box Execution)
 
-### Phase 1: Storyline Design
+Run these steps without user interruption. Do not show internal red-team outputs.
 
-- Extract the core scientific claims from the user's inputs.
-- Build a venue-adapted paper outline.
-- Map every figure or table to a specific claim.
-- Prefer claim-driven subsection titles.
-- Output only the outline and figure-allocation table.
-- End with a short approval gate asking whether the outline should be revised or whether Phase 2 can begin.
+A. Storyline Design
+- Extract core claims strictly from provided materials.
+- Build venue-aligned outline and figure-to-claim mapping.
 
-### Phase 2: Modular Drafting
+B. State-Tracked Drafting (Anti-Context-Loss)
+- Create an internal state object (outline, section summaries, open TODOs).
+- Draft in sections, then compress each section into a 5-10 line state summary.
+- Use the state summaries to continue drafting subsequent sections.
 
-- Draft the paper in modules such as Abstract, Introduction, Method, Results, and Discussion.
-- Keep the prose academic, direct, and finding-driven.
-- Adapt the module format to the venue. For Bioinformatics, use a structured abstract. For Nature-family venues, keep Methods backloaded.
-- Output only the module drafts requested by this phase.
-- End with a short approval gate asking the user to review the module drafts before Phase 3.
+C. Internal Devil's-Advocate Self-Correction (Silent)
+- Apply strongest counter-argument checks and methodology rigor checks.
+- If CRITICAL/MAJOR issues are found, revise internally and re-check.
+- Do NOT expose the red-team critique to the user.
 
-### Phase 3: Unification And Style Alignment
+D. Template-First Typesetting + Auto-Bibliography
+- Select the official template from `ml-paper-writing/templates` matching the venue.
+- Inject content into the template instead of hand-writing LaTeX structure.
+- Use `.bib` entries only; do not fabricate citations.
+- Insert `\cite{}` only when the entry exists in the provided `.bib`.
+- If a needed citation is missing, omit it and note in QA.
 
-- Merge the approved modules into a single manuscript.
-- Remove AI-sounding transitions, verbose connectors, and meta-explanations.
-- Enforce consistent terminology across the full text.
-- Raise the Discussion to biological or practical significance without overclaiming.
-- Output the unified Markdown manuscript.
-- End with a short approval gate asking whether the unified manuscript is ready for Phase 4.
+## Final Output
 
-### Phase 4: Typesetting And Asset Integration
-
-- Write self-contained captions.
-- Do not invent p-values, error bars, sample sizes, or statistical tests that do not exist in the source material.
-- Generate venue-appropriate LaTeX and preserve only core equation numbering.
-- Apply the correct citation style only after the venue is fixed.
-- Output the typesetting source and related assets that this phase can produce.
-- End with a short approval gate asking whether the typeset assets are ready for Phase 5.
-
-### Phase 5: Deep QA And Final Polish
-
-- Check figure overflow, caption placement, equation overflow, citation-reference alignment, blind-review compliance, and availability statements.
-- Fix concrete issues found in the manuscript assets.
-- Output the final QA report and the final manuscript assets.
-- State that the workflow has completed.
+Output in one response:
+1. Final LaTeX source that compiles with the chosen template
+2. A short QA report listing any unresolved risks or missing inputs
 
 ## Hard Rules
 
-- Do not collapse multiple phases into one response.
-- Do not write Results as a metric directory.
-- Do not use advisor-facing narration or section-introduction filler.
-- Do not mix code flags and config names into the main mathematical narrative.
-- Do not fabricate unsupported statistics.
-- Do not number every displayed equation.
-- Do not lock citation style before the venue is known.
+- Do not add any extra stop points after Phase 0.
+- Do not invent citations, p-values, or statistics.
+- Do not generate LaTeX templates from memory if a template exists.
+- Do not expose internal red-team text.
