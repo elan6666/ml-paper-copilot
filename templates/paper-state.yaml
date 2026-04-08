@@ -1,0 +1,30 @@
+version: 1
+venue:
+  name: null
+  template: null
+  fallback_used: false
+inputs:
+  figures: []
+  tables: []
+  notes: []
+  markdown_fragments: []
+  bib_path: null
+claims:
+  core_claims: []
+  scope_limits: []
+figure_map: []
+outline:
+  sections: []
+state_summaries:
+  abstract: null
+  introduction: null
+  method: null
+  results: null
+  discussion: null
+  conclusion: null
+citations:
+  available_keys: []
+  missing_support: []
+risks:
+  open_issues: []
+  qa_notes: []

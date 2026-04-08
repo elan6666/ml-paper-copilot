@@ -1,17 +1,18 @@
 # ml-paper-copilot
 
-`ml-paper-copilot` is a reusable Codex skill for turning figures, experiment results, Markdown fragments, and `.bib` libraries into a two-phase automated manuscript workflow for machine learning, computational biology, and bioinformatics papers.
+`ml-paper-copilot` is a standalone Codex skill for turning figures, experiment results, Markdown fragments, and `.bib` libraries into a two-phase automated manuscript workflow for machine learning, computational biology, and bioinformatics papers.
 
-Unlike a one-shot paper rewriter, this skill uses a single confirmation checkpoint and then runs the rest of the pipeline end to end: storyline design, state-tracked drafting, silent red-team self-correction, template-first LaTeX generation, and final QA.
+The repository is self-contained. It does not depend on any other installed skill at runtime. All drafting logic, review rules, citation policy, state-tracking guidance, and LaTeX templates live inside this repository.
 
 ## Highlights
 
 - Two-phase state-machine workflow
 - Exactly one approval stop before full execution
-- Venue-aware template injection for conference and journal papers
+- Self-contained references and bundled venue templates
 - State-tracked drafting to reduce long-context fragility
 - Silent devil's-advocate and methodology self-review before output
-- Final QA for template fit, figures, equations, citations, and missing bibliography support
+- `.bib`-only citation policy with no fabricated references
+- Final QA covering evidence gaps, citation gaps, and template fallback
 
 ## Workflow
 
@@ -22,47 +23,35 @@ The skill runs in two phases:
 
 Hard constraint: the agent stops once after Phase 0, then completes Phase 1 without additional approval gates.
 
-## Typical Uses
-
-- Turn benchmark results and figures into a paper-ready storyline
-- Convert notes, plots, and a `.bib` file into a full LaTeX paper
-- Run one-shot end-to-end manuscript generation after a single confirmation
-- Draft with internal state summaries to survive long outputs and section handoffs
-- Apply internal red-team rejection logic before producing the final source
-
 ## Input Materials
 
-Phase 0 works better when the user provides structured source material instead of only broad requests.
+Phase 0 works best when the user provides structured material instead of only broad requests.
 
 Recommended inputs:
 
+- target venue or template
 - figures or tables
 - a one-sentence conclusion for each figure
-- three to five bullet points describing the core innovation
+- three to five bullet points describing the core contribution
 - result summaries or metric notes
 - Markdown fragments from an existing draft
 - a `.bib` file
-- venue target and any formatting constraints
+- any formatting constraints that matter to the target venue
 
-The workflow should guide the user to provide missing inputs when they are absent.
+## Bundled Assets
 
-## Search Keywords
+This repository contains its own operating references and drafting templates:
 
-This skill is intended to match needs such as:
+- `references/red-team-review.md`
+- `references/methodology-checks.md`
+- `references/section-checklist.md`
+- `references/citation-workflow.md`
+- `references/state-tracked-drafting.md`
+- `references/template-selection.md`
+- `templates/paper-state.yaml`
+- `templates/iclr/`, `templates/neurips/`, `templates/icml/`, `templates/acl/`, `templates/aaai/`
 
-- paper writing
-- manuscript drafting
-- academic writing workflow
-- automated paper workflow
-- two-phase paper workflow
-- journal paper workflow
-- conference paper workflow
-- bioinformatics paper writing
-- computational biology manuscript drafting
-- figure-to-paper conversion
-- results-to-paper workflow
-- template-based latex paper writing
-- bibliography-aware paper drafting
+The bundled templates are venue-compatible house templates intended for self-contained drafting. If an official kit is provided later, the manuscript can be adapted into it without changing the scientific content.
 
 ## Repository Structure
 
@@ -74,9 +63,23 @@ ml-paper-copilot/
 |-- SKILL.md
 |-- agents/
 |   `-- openai.yaml
-`-- references/
-    |-- workflow_cn.md
-    `-- workflow_en.md
+|-- references/
+|   |-- workflow_cn.md
+|   |-- workflow_en.md
+|   |-- red-team-review.md
+|   |-- methodology-checks.md
+|   |-- section-checklist.md
+|   |-- citation-workflow.md
+|   |-- state-tracked-drafting.md
+|   `-- template-selection.md
+`-- templates/
+    |-- README.md
+    |-- paper-state.yaml
+    |-- iclr/
+    |-- neurips/
+    |-- icml/
+    |-- acl/
+    `-- aaai/
 ```
 
 ## Installation
@@ -95,7 +98,7 @@ npx skills add https://github.com/elan6666/ml-paper-copilot -g -y
 ## Example Invocation
 
 ```text
-Use $ml-paper-copilot to collect my venue, figures, results, and .bib in Phase 0, then run a full end-to-end paper workflow in Phase 1.
+Use $ml-paper-copilot to collect my venue, figures, results, and .bib in Phase 0, then run a self-contained end-to-end paper workflow in Phase 1.
 ```
 
 ## Interaction Example
@@ -105,7 +108,7 @@ User: Use $ml-paper-copilot. I attached 3 figure images, a results.md draft, and
 Agent: Phase 0. What is the target venue? Please also provide a one-sentence conclusion for each figure and 3 bullet points for the core contribution.
 User: Target venue is ICLR. Here are the figure conclusions and contribution bullets.
 User: Approved. Continue.
-Agent: Phase 1. I will now run storyline design, state-tracked drafting, internal self-review, template injection, and final QA, then return the final LaTeX source and QA report.
+Agent: Phase 1. I will now run storyline design, state-tracked drafting, internal self-review, bundled-template assembly, and final QA, then return the final LaTeX source and QA report.
 ```
 
 ## Design Principles
@@ -114,8 +117,8 @@ Agent: Phase 1. I will now run storyline design, state-tracked drafting, interna
 - Map every figure and table to a claim.
 - Keep methods mathematically structured and implementation details separate.
 - Do not invent statistics, p-values, sample sizes, or error-bar definitions.
-- Do not lock citation style before the target venue is fixed.
 - Do not generate citations outside the provided `.bib`.
+- Do not rely on any external skill or template directory at runtime.
 
 ## Output Expectations
 
@@ -123,7 +126,7 @@ When used correctly, the skill should produce:
 
 - a venue-adapted paper plan
 - state-tracked section drafting
-- a final LaTeX manuscript using a venue template
+- a final LaTeX manuscript using a bundled template
 - citation usage constrained by the provided `.bib`
 - a short QA report
 

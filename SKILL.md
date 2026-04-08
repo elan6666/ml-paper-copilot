@@ -1,86 +1,93 @@
 ---
 name: ml-paper-copilot
-description: "Two-phase, approval-gated, fully automated academic manuscript workflow for ML, computational biology, and bioinformatics papers. Use when Codex must collect venue + figures + results + .bib once, then run a single end-to-end pipeline: storyline design, state-tracked drafting, internal devil's-advocate self-correction, template-based LaTeX typesetting, and final QA."
+description: "Standalone two-phase academic manuscript workflow for ML, computational biology, and bioinformatics papers. Use when Codex must collect venue + figures + results + .bib once, then run a self-contained end-to-end pipeline: storyline design, state-tracked drafting, silent devil's-advocate self-correction, bundled-template LaTeX generation, and final QA without depending on any other installed skill."
 ---
 
-# ML Paper Copilot (2-Phase Auto Workflow)
+# ML Paper Copilot
 
-Use this skill when the user wants a minimal, anti-fragile, two-phase pipeline that only pauses once for confirmation, then runs end-to-end without interruptions.
+Run this skill as a strict 2-phase state machine.
 
-## Core Operating Rule (Strict 2-Phase State Machine)
+## Core Rule
 
-- Phase 0 is the ONLY stop point.
-- Phase 1 runs to completion without user interaction.
-- Do not add extra approval gates beyond Phase 0.
+- Phase 0 is the only stop point.
+- Phase 1 runs to completion without extra user approval.
+- Do not read or depend on any external skill at runtime.
 
-## Mandatory Knowledge Loading (Before Phase 0)
+## Mandatory Local Loading
 
-You MUST explicitly read the following local references before starting Phase 0:
-
-1. Red-team self-correction:
-   - `C:\Users\16523\.agents\skills\academic-paper-reviewer\agents\devils_advocate_reviewer_agent.md`
-   - `C:\Users\16523\.agents\skills\academic-paper-reviewer\agents\methodology_reviewer_agent.md`
-   - `C:\Users\16523\.agents\skills\paper-self-review\SKILL.md`
-2. Template injection + citation automation:
-   - `C:\Users\16523\.codex\skills\ml-paper-writing\references\citation-workflow.md`
-   - `C:\Users\16523\.codex\skills\ml-paper-writing\templates\README.md`
-3. State-tracked drafting:
-   - `C:\Users\16523\.codex\skills\autoresearch\references\agent-continuity.md`
-   - `C:\Users\16523\.codex\skills\autoresearch\templates\research-state.yaml`
-
-Also read the workflow reference for the working language:
+Before Phase 0, read the workflow reference matching the working language:
 - Chinese: `references/workflow_cn.md`
 - English: `references/workflow_en.md`
 
-Do not infer rules from memory when these files are available.
+Before Phase 1, read these local references:
+- `references/state-tracked-drafting.md`
+- `references/citation-workflow.md`
+- `references/template-selection.md`
+- `references/red-team-review.md`
+- `references/methodology-checks.md`
+- `references/section-checklist.md`
+- `templates/paper-state.yaml`
+- `templates/README.md`
 
-## Phase 0 (Initialization And Intercept)
+Read only the bundled files in this repository. Do not infer donor-skill rules from memory when a local reference exists.
 
-Collect and confirm all inputs. Stop and wait once.
+## Phase 0: Initialization And Intercept
+
+Collect and confirm all required inputs, then stop once.
 
 Required inputs:
-- target venue or template (ICLR/NeurIPS/ICML/ACL/AAAI/etc.)
-- figures and tables (or explicit statement that none exist yet)
-- results summary or Markdown fragments
+- target venue or target template
+- figures and tables, or an explicit statement that none exist yet
+- results summary, Markdown fragments, or experiment notes
 - bibliography file: `.bib`
-- style preference (objective, claim-driven, no meta-narration by default)
+- style preference, defaulting to objective, claim-driven, and no meta-narration
 
-If any required input is missing, ask for it. After confirmation, proceed to Phase 1 and do not pause again.
+Strongly encourage the user to provide:
+- one-sentence conclusion per figure
+- 3 to 5 bullets for the core contribution
+- any venue-specific formatting constraints
 
-## Phase 1 (End-to-End Black-Box Execution)
+If any required input is missing, ask for it here. After the user confirms, move to Phase 1 and do not pause again.
 
-Run these steps without user interruption. Do not show internal red-team outputs.
+## Phase 1: End-To-End Execution
 
-A. Storyline Design
-- Extract core claims strictly from provided materials.
-- Build venue-aligned outline and figure-to-claim mapping.
+Run all steps without user interruption. Never expose internal red-team critique.
 
-B. State-Tracked Drafting (Anti-Context-Loss)
-- Create an internal state object (outline, section summaries, open TODOs).
-- Draft in sections, then compress each section into a 5-10 line state summary.
-- Use the state summaries to continue drafting subsequent sections.
+### Step A: Storyline Design
+- extract core claims strictly from the provided materials
+- map each figure or table to a claim, not merely to a metric
+- build a venue-aligned outline and section order
 
-C. Internal Devil's-Advocate Self-Correction (Silent)
-- Apply strongest counter-argument checks and methodology rigor checks.
-- If CRITICAL/MAJOR issues are found, revise internally and re-check.
-- Do NOT expose the red-team critique to the user.
+### Step B: State-Tracked Drafting
+- instantiate the state schema from `templates/paper-state.yaml`
+- draft section by section
+- compress each completed section into a short state summary before drafting the next section
+- continue from state plus source materials rather than raw accumulated context
 
-D. Template-First Typesetting + Auto-Bibliography
-- Select the official template from `ml-paper-writing/templates` matching the venue.
-- Inject content into the template instead of hand-writing LaTeX structure.
-- Use `.bib` entries only; do not fabricate citations.
-- Insert `\cite{}` only when the entry exists in the provided `.bib`.
-- If a needed citation is missing, omit it and note in QA.
+### Step C: Silent Internal Self-Correction
+- apply the bundled devil's-advocate checks
+- apply the bundled methodology checks
+- apply the section checklist before finalizing each major section
+- if CRITICAL or MAJOR issues remain, rewrite internally and re-check
+
+### Step D: Bundled Template And Citation Integration
+- choose only from this repository's `templates/` bundle
+- use the venue mapping in `references/template-selection.md`
+- inject content into the selected bundled template instead of freehanding a full LaTeX structure
+- use only citation keys present in the provided `.bib`
+- if a needed citation key is missing, omit the citation and record the gap in QA
+- never fabricate citations, bibliography entries, p-values, or statistics
 
 ## Final Output
 
-Output in one response:
-1. Final LaTeX source that compiles with the chosen template
-2. A short QA report listing any unresolved risks or missing inputs
+Return in one response:
+1. final LaTeX source based on the selected bundled template
+2. a short QA report listing unresolved risks, missing citation support, and formatting caveats
 
 ## Hard Rules
 
-- Do not add any extra stop points after Phase 0.
-- Do not invent citations, p-values, or statistics.
-- Do not generate LaTeX templates from memory if a template exists.
-- Do not expose internal red-team text.
+- do not add extra stop points after Phase 0
+- do not depend on any other installed skill or external template folder
+- do not expose internal red-team text
+- do not claim visual verification that was not actually performed
+- do not invent bibliography entries or citation keys
