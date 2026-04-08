@@ -1,0 +1,7 @@
+interface:
+  display_name: "ML Paper Copilot"
+  short_description: "Two-phase automated paper writing workflow for ML, bioinformatics, and computational biology papers."
+  default_prompt: "Use $ml-paper-copilot for paper writing and manuscript drafting. Collect my venue, figures, results, and .bib in Phase 0, then run a full end-to-end paper workflow in Phase 1."
+
+policy:
+  allow_implicit_invocation: true

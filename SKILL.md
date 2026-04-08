@@ -1,6 +1,6 @@
 ---
 name: ml-paper-copilot
-description: Two-phase, approval-gated, fully automated academic manuscript workflow for ML, computational biology, and bioinformatics papers. Use when Codex must collect venue + figures + results + .bib once, then run a single end-to-end pipeline: storyline design, state-tracked drafting, internal devil's-advocate self-correction, template-based LaTeX typesetting, and final QA.
+description: "Two-phase, approval-gated, fully automated academic manuscript workflow for ML, computational biology, and bioinformatics papers. Use when Codex must collect venue + figures + results + .bib once, then run a single end-to-end pipeline: storyline design, state-tracked drafting, internal devil's-advocate self-correction, template-based LaTeX typesetting, and final QA."
 ---
 
 # ML Paper Copilot (2-Phase Auto Workflow)
